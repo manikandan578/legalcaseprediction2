@@ -1,0 +1,10 @@
+flask
+pandas
+scikit-learn
+nltk
+reportlab
+twilio
+flask-session
+joblib
+smtplib
+email-validator

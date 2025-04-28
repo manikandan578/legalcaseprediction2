@@ -1,0 +1,44 @@
+<!-- templates/predict.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="predict-container">
+        <h2>Legal Document Case Prediction</h2>
+
+        <form method="POST" action="/predict">
+            <input type="text" name="name" placeholder="Enter Name" required><br><br>
+            <input type="text" name="pattano" placeholder="Enter Patta No" required><br><br>
+            <input type="text" name="survey_number" placeholder="Enter Survey Number" required><br><br>
+            <input type="email" name="email" placeholder="Enter Email" required><br><br>
+            <input type="text" name="phone" placeholder="Enter Phone Number" required><br><br>
+
+            <textarea name="case_text" placeholder="Paste Legal Case Text Here" 
+                      style="width:1078px; height:311px;" required></textarea><br><br>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="output-box">
+            <h3>Prediction Result:</h3>
+            <p><strong>Name:</strong> {{ prediction.name }}</p>
+            <p><strong>Predicted Case Type:</strong> {{ prediction.case_type }}</p>
+            <p><strong>Predicted Favor Result:</strong> {{ prediction.favor_result }}</p>
+            <p><strong>Prediction Confidence:</strong> {{ prediction.confidence | round(2) }}%</p>
+            <p><strong>Summary:</strong> {{ prediction.summary }}</p>
+
+            <form method="POST" action="/send">
+                <button type="submit">Send Email and SMS</button>
+            </form>
+            <br>
+            <a href="/download"><button>Download Report</button></a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
